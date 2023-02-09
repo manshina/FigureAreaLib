@@ -2,14 +2,13 @@
 {
     public abstract class Figure
     {
-        //название фигуры
-        public string Name { get; }
+        
         //площадь фигуры
-        public double Area { get; protected set; }      
+        public abstract double Area { get; protected set; }
         //базовый конструктор с провекой значений
-        public Figure(double[] Args, string name)
+        public Figure(double[] Args)
         {
-            Name = name;
+            
             foreach (var value in Args)
             {
                 if (!Double.IsNormal(value))
@@ -22,10 +21,9 @@
                 }
             }
         }
-        //метод вывода информации о фигуре
-        public string Print()
-        {
-            return $"{Name}, {Area}";
-        }
+        //вычисление площади
+       
+        public abstract double GetArea();
+
     }
 }

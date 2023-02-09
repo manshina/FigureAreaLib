@@ -14,8 +14,33 @@ namespace FigureAreaLibTests
             double expected = 6;
 
             //act
+                      
+            Figure figure = Triangle.CreateWith3Sides(a, b, c);
+            double actual = figure.GetArea();
 
-            double actual = Triangle.AreaFrom3Sides(a, b, c).Area;
+
+            //assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TriangleAreaFromSideAndHeight_4and3_6return()
+        {
+            //arrange
+            double a = 4;
+            double h = 3;
+
+
+            double expected = 6;
+
+            //act
+
+            
+            
+            Figure figure = Triangle.CreateWithSideAndHeight(a, h);
+            double actual = figure.GetArea();
+           
+            
+
 
             //assert
             Assert.Equal(expected, actual);
@@ -33,11 +58,7 @@ namespace FigureAreaLibTests
 
             //act
 
-
-
-            //assert
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.AreaFrom3Sides(a, b, c));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.CreateWith3Sides(a, b, c).GetArea());
         }
 
         [Fact]
@@ -51,11 +72,7 @@ namespace FigureAreaLibTests
 
             //act
 
-
-
-            //assert
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.AreaFrom3Sides(a, b, c));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.CreateWith3Sides(a, b, c).GetArea());
         }
 
         [Fact]
@@ -69,11 +86,11 @@ namespace FigureAreaLibTests
 
             //act
 
-
+           
 
             //assert
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.AreaFrom3Sides(a, b, c));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Triangle.CreateWith3Sides(a, b, c).GetArea());
         }
 
         [Fact]
@@ -86,12 +103,12 @@ namespace FigureAreaLibTests
 
 
             //act
-
+            Figure figure = Triangle.CreateWith3Sides(a, b, c);
 
 
             //assert
 
-            Assert.Throws<Exception>(() => Triangle.AreaFrom3Sides(a, b, c));
+            Assert.Throws<Exception>(() => figure.GetArea());
         }
 
         [Fact]
@@ -103,7 +120,9 @@ namespace FigureAreaLibTests
 
             //act
 
-            double actual = Circle.AreaFromRadius(radius).Area;
+            Figure figure = Circle.CircleWithRadius(4);
+
+            var actual = figure.GetArea();
 
             //assert
             Assert.Equal(expected, actual);
@@ -119,11 +138,11 @@ namespace FigureAreaLibTests
 
             //act
 
-
+            
 
             //assert
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => Circle.AreaFromRadius(radius));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Circle.CircleWithRadius(-4).GetArea());
         }
 
 
@@ -136,12 +155,12 @@ namespace FigureAreaLibTests
 
 
             //act
-
+            
 
 
             //assert
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => Circle.AreaFromRadius(radius));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Circle.CircleWithRadius(0).GetArea());
         }
     }
 }

@@ -12,37 +12,53 @@ namespace FigureAreaLib
         public double Radius { get; set; }
         //длина окружности
         public double Lenght { get; set; }
+        public override double Area { get; protected set; }
+
         //конструктор
-        private Circle(double[] Args, string name) : base(Args, name)
+        private Circle(double[] Args) : base(Args)
         {
 
         }
-        //статический фабричный метод
-        public static Circle AreaFromRadius(double radius, string name = "Circle")
+        //создание руга с радиусом
+        public static Circle CircleWithRadius(double radius)
         {
             //полученные значения передаем в базовый конструктор для проверки 
             double[] args = { radius };
             //создаем круг
-            Circle circle = new(args, name)
+            Circle circle = new(args)
             {
                 Radius = radius
-            };
-            //площадь круга
-            circle.Area = Math.PI * Math.Pow(radius, 2);
+            };                   
             return circle;
         }
 
-        //пример другого варианта нахождения площади через длину окружности
-        public static Circle AreaFromLenght(double lenght, string name = "Circle")
+        //создание руга с длинной
+        public static Circle CircleWitmLenght(double lenght)
         {
             double[] args = { lenght };
-            Circle circle = new(args, name)
+            Circle circle = new(args)
             {
                 Lenght = lenght
-            };
-            circle.Area = Math.Pow(lenght, 2) / (4 * Math.PI);
+            };           
             return circle;
         }
 
+        //вычислить площадь круга
+        public override double GetArea()
+        {
+            //по радиусу
+            if(Radius != 0)
+            {
+                Area = Math.PI * Math.Pow(Radius, 2);
+            }
+            //по длинне
+            else if(Lenght != 0)
+            {
+                Area = Math.Pow(Lenght, 2) / (4 * Math.PI);
+            }
+            
+
+            return Area;
+        }
     }
 }

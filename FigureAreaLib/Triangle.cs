@@ -9,53 +9,86 @@ namespace FigureAreaLib
     public class Triangle : Figure
     {
         //сторона а
-        public double A { get; private set; }
+        public double A { get; private set; } 
         //сторона б
         public double B { get; private set; }
         //сторона с
         public double C { get; private set; }
+
+        public double H { get; private set; }
         //является ли прямоугольным
         public bool IsRight { get; private set; }
+
+        
+
+        public override double Area { get; protected set; }
+
         //конструктор
-        private Triangle(double[] Args, string name) : base(Args, name)
+        private Triangle(double[] args) : base(args)
         {
+           
 
         }
-        //статический фабричный метод
-        public static Triangle AreaFrom3Sides(double a, double b, double c, string name = "Triangle")
+        //создание треугольника с 3 сторонами
+        public static Triangle CreateWith3Sides(double a, double b, double c)
         {
-            //полученные значения передаем в базовый конструктор для проверки 
             double[] args = { a, b, c };
             //создаем треугольник
-            Triangle triangle = new(args, name)
+            Triangle triangle = new(args)
             {
                 A = a,
                 B = b,
                 C = c
             };
-            //полупериметр
-            double semPer = (a + b + c) / 2;
-            //выражение под корнем для последующей проверки на существование треугольника 
-            double toSqrt = semPer * (semPer - a) * (semPer - b) * (semPer - c);
-            //проверка на возможность существования треугольника
-            if (toSqrt <= 0)
+            return triangle;
+        }
+        //создание тругольника со стороной и высотой
+        public static Triangle CreateWithSideAndHeight(double a, double h)
+        {
+            double[] args = { a, h};
+            //создаем треугольник
+            Triangle triangle = new(args)
             {
-                throw new Exception("No such triangle exists");
-            }
-            //площадь треугольника
-            triangle.Area = Math.Sqrt(toSqrt);
-            //проверка на прямоугльный треугольник
-            if ((a * a + b * b == c * c) || (a * a + c * c == b * b) || (c * c + b * b == a * a))
-            {
-                triangle.IsRight = true;
-            }
-            else
-            {
-                triangle.IsRight = false;
-            }
-
+                A = a,                
+                H = h
+            };
             return triangle;
         }
 
+        //вычисление площади
+        public override double GetArea()
+        {
+            //по высоте и стороне
+            if(H != 0)
+            {
+                Area = A * H / 2 ;
+            }
+            //по 3 сторонам
+            else if(A != 0 && B !=0 && C!=0)
+            {
+                //полупериметр
+                double semPer = (A + B + C) / 2;
+                //выражение под корнем для последующей проверки на существование треугольника 
+                double toSqrt = semPer * (semPer - A) * (semPer - B) * (semPer - C);
+                //проверка на возможность существования треугольника
+                if (toSqrt <= 0)
+                {
+                    throw new Exception("No such triangle exists");
+                }
+                //площадь треугольника
+                Area = Math.Sqrt(toSqrt);
+                //проверка на прямоугльный треугольник
+                if ((A * A + B * B == C * C) || (A * A + C * C == B * B) || (C * C + B * B == A * A))
+                {
+                    IsRight = true;
+                }
+                else
+                {
+                    IsRight = false;
+                }
+            }
+                      
+            return Area;
+        }
     }
 }
